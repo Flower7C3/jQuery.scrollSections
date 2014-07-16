@@ -45,6 +45,8 @@
 		createNavigation: true,
 		// The animation speed.
 		speed: 500,
+		// The animation type
+		easing: 'linear',
 		// Throw execption if something goes wrong.
 		exceptions: false
 	};
@@ -346,6 +348,7 @@
 			var self = this;
 			var yTo;
 			var speed;
+			var easing;
 
 			if (index != null && index >= 0 && index < this._sections) {
 				this._currentStep = index;
@@ -355,6 +358,7 @@
 
 				yTo = this._$currentSection.offset().top;
 				speed = noAnimation ? 0 : this.options.speed;
+				easing = noAnimation ? 'linear' : this.options.easing;
 
 				// Mark any link on the page that refers to our active section active.
 				if (this._$nav) {
@@ -366,7 +370,7 @@
 				this.scrollCallback(true);
 				// Using deferred object otherwise callback happens twice because we are animating 2 jQuery objects for cross-browser compatibiity
 				$.when(
-					this._$htmlBody.stop(true, false).animate({ scrollTop: yTo }, speed)
+					this._$htmlBody.stop(true, false).animate({ scrollTop: yTo }, speed, easing)
 				).done(function(){
 					// Call the after callback
 					self.scrollCallback();
